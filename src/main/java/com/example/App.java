@@ -1,17 +1,19 @@
 package com.example;
 
-/**
- * Hello world!
- */
-public final class App {
-    private App() {
-    }
+import java.sql.*;
 
-    /**
-     * Says hello to the world.
-     * @param args The arguments of the program.
-     */
+public class App {
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        String url = "jdbc:mysql://localhost:3306/";
+        String username = "root";
+        String password = "pass";
+
+        try {
+            Connection connection = DriverManager.getConnection(url, username, password);
+            System.out.println(connection.isValid(5));
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
