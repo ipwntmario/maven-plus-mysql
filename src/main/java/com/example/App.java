@@ -3,13 +3,9 @@ package com.example;
 import java.sql.*;
 
 public class App {
-    // database url + credentials
-    static String url = "jdbc:mysql://localhost:3306/jdbc";
-    static String username = "root";
-    static String password = "pass";
-
     public static void main(String[] args) {
-        Note testNote = getNoteById(2);
+        App app = new App();
+        Note testNote = app.getNoteById(2);
         System.out.println("ID: " + testNote.getId());
         System.out.println("Content: " + testNote.getContent());
         System.out.println("Priority: " + testNote.getPriority());
@@ -54,7 +50,7 @@ public class App {
     }
 
     // read
-    public static Note getNoteById(long id) {
+    public  Note getNoteById(long id) {
 
         // Step 1 & 5: Open a connection to the db and close it when done.
         try (Connection connection = MySQLConnectionUtility.getConnection()) {
