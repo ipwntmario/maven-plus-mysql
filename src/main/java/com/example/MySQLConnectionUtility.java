@@ -13,9 +13,9 @@ public class MySQLConnectionUtility {
             Connection connection = null;
 
             try {
-                connection = DriverManager.getConnection(url, username, password);
+                connection = DriverManager.getConnection(
+                        url, username, password);
             } catch (SQLException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 

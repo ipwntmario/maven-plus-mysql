@@ -19,11 +19,11 @@ public class App {
     public Note addNote(long id, String content, String priority) {
 
         // Steps 1 & 5: Open connection to db and close when done.
-        try (Connection connection = DriverManager.getConnection(url, username, password)){
+        try (Connection connection = MySQLConnectionUtility.getConnection()){
 
             // Step 2: Create your statement.
             PreparedStatement ps = connection.prepareStatement(
-                "INSERT INTO notes (content, priority) VALUES (?, ?)", 
+                    "INSERT INTO notes (content, priority) VALUES (?, ?)", 
                 Statement.RETURN_GENERATED_KEYS);
 
             // Assign any parameters to their values.
@@ -41,8 +41,8 @@ public class App {
                 // ...get the value of the furst column in that resultset row...
                 long resultId = rs.getLong(1);
 
-                // ... and return a Note with the generated id in its state, as well as the
-                // other values.
+                // ... and return a Note with the generated id in its state, as 
+                // well as the other values.
                 return new Note(resultId, content, priority);
             }
         } catch (SQLException e) {
@@ -57,10 +57,11 @@ public class App {
     public static Note getNoteById(long id) {
 
         // Step 1 & 5: Open a connection to the db and close it when done.
-        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+        try (Connection connection = MySQLConnectionUtility.getConnection()) {
 
             // Step 2: Create your statement.
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM notes WHERE id = ?");
+            PreparedStatement ps = connection.prepareStatement(
+                    "SELECT * FROM notes WHERE id = ?");
 
             // Assign any parameters their values.
             ps.setLong(1, id);
