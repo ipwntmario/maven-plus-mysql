@@ -19,7 +19,8 @@ public class ConnectionFactory {
      * will allow us the ability to access our db.properties to obtain our 
      * sensitive information.
      */
-    private static final ConnectionFactory connectionFactory = new  ConnectionFactory(); 
+    private static final ConnectionFactory connectionFactory = 
+        new ConnectionFactory(); 
     private Properties props = new Properties();
 
     /**
@@ -31,7 +32,8 @@ public class ConnectionFactory {
      */
     private ConnectionFactory(){ 
         try {
-            props.load(new FileReader("src/main/resources/db.properties"));
+            props.load(
+                new FileReader("src/main/resources/db.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,9 +42,15 @@ public class ConnectionFactory {
     private ConnectionFactory(int useEnvironmentalVariables){ 
         if (useEnvironmentalVariables == 1) {
             try {
-                props.setProperty("url", System.getenv("url"));
-                props.setProperty("username", System.getenv("connectionUsername"));
-                props.setProperty("password", System.getenv("connectionPassword"));
+                props.setProperty(
+                    "url", 
+                    System.getenv("url"));
+                props.setProperty(
+                    "username", 
+                    System.getenv("connectionUsername"));
+                props.setProperty(
+                    "password", 
+                    System.getenv("connectionPassword"));
             } catch (IllegalStateException e) {
                 e.printStackTrace();
             }
