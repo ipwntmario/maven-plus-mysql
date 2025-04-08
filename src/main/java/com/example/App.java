@@ -15,7 +15,7 @@ public class App {
     public Note addNote(long id, String content, String priority) {
 
         // Steps 1 & 5: Open connection to db and close when done.
-        try (Connection connection = MySQLConnectionUtility.getConnection()){
+        try (Connection connection = ConnectionFactory.getConnection()){
 
             // Step 2: Create your statement.
             PreparedStatement ps = connection.prepareStatement(
@@ -53,7 +53,7 @@ public class App {
     public  Note getNoteById(long id) {
 
         // Step 1 & 5: Open a connection to the db and close it when done.
-        try (Connection connection = MySQLConnectionUtility.getConnection()) {
+        try (Connection connection = ConnectionFactory.getConnection()) {
 
             // Step 2: Create your statement.
             PreparedStatement ps = connection.prepareStatement(
