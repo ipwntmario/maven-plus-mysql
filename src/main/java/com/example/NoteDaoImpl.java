@@ -2,24 +2,13 @@ package com.example;
 
 import java.sql.*;
 
-public class App {
-    private ConnectionFactory connectionFactory = 
-        ConnectionFactory.getConnectionFactory();
-
-    public static void main(String[] args) {
-        // App app = new App();
-        NoteDao noteDao = new NoteDaoImpl();
-        Note testNote = noteDao.getNoteById(2);
-        System.out.println("ID: " + testNote.getId());
-        System.out.println("Content: " + testNote.getContent());
-        System.out.println("Priority: " + testNote.getPriority());
-    }
-
-    // write
+public class NoteDaoImpl implements NoteDao {
+        // write
     public Note addNote(long id, String content, String priority) {
 
         // Steps 1 & 5: Open connection to db and close when done.
-        try (Connection connection = connectionFactory.getConnection()){
+        try (Connection connection = 
+            ConnectionFactory.getConnectionFactory().getConnection()){
 
             // Step 2: Create your statement.
             PreparedStatement preparedStatement = connection.prepareStatement(
@@ -57,7 +46,8 @@ public class App {
     public  Note getNoteById(long id) {
 
         // Step 1 & 5: Open a connection to the db and close it when done.
-        try (Connection connection = connectionFactory.getConnection()) {
+        try (Connection connection = 
+            ConnectionFactory.getConnectionFactory().getConnection()){
 
             // Step 2: Create your statement.
             PreparedStatement preparedStatement = 
