@@ -1,4 +1,10 @@
-#Tue Apr 08 13:06:24 EDT 2025
+#Tue Apr 08 14:19:06 EDT 2025
+C\:\\Users\\nin10\\Documents\\VSCodeProjects\\maven-plus-mysql\\maven-plus-mysql\\src\\main\\java\\com\\example\\App.java=1744134440288
+C\:\\Users\\nin10\\Documents\\VSCodeProjects\\maven-plus-mysql\\maven-plus-mysql\\src\\main\\java\\com\\example\\ConnectionFactory.java=1744134629444
+C\:\\Users\\nin10\\Documents\\VSCodeProjects\\maven-plus-mysql\\maven-plus-mysql\\src\\main\\java\\com\\example\\Note.java=1744135630773
+C\:\\Users\\nin10\\Documents\\VSCodeProjects\\maven-plus-mysql\\maven-plus-mysql\\src\\main\\java\\com\\example\\NoteDao.java=1744135752352
+C\:\\Users\\nin10\\Documents\\VSCodeProjects\\maven-plus-mysql\\maven-plus-mysql\\src\\main\\java\\com\\example\\NoteDaoImpl.java=1744136339988
+C\:\\Users\\nin10\\Documents\\VSCodeProjects\\maven-plus-mysql\\maven-plus-mysql\\src\\main\\resources\\db.properties=1744136015996
 C\:\\Users\\nin10\\Documents\\VSCodeProjects\\maven-plus-mysql\\maven-plus-mysql\\src\\test\\java\\com\\example\\AppTest.java=1743832087658
 configuration*?=FD126670C77FF77EEAFB597A0DD44EF6620532D
-module-resource*?\:checkstyle/suppressions.xml=A74F84F1080D806189FE72A755CECA2FD8751283
+module-resource*?\:checkstyle/suppressions.xml=59510C9EC7D7A3CF66E6C04CE7291F9611F4DBAE
