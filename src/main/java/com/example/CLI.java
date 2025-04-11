@@ -1,7 +1,9 @@
 package com.example;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 public class CLI {
     NoteDao noteDao;
@@ -14,40 +16,30 @@ public class CLI {
         this.active = true;
     }
 
-    public void promptForActions() throws IOException {
+    public void promptForActions() {
         try (Scanner inputScanner = new Scanner(System.in)) {
+            Map<Integer, Runnable> actions = Map.of(
+                1, () -> addNote(),
+                2, () -> viewNote(),
+                3, () -> viewAllNotes(),
+                4, () -> binaryCalculator(),
+                5, () -> active = false
+            );
+
             while (active) {
-
                 System.out.println("What would you like to do?" +
-                "\n 1: Try to add a note item." +
-                "\n 2: View a note by ID." +
-                "\n 3: View a truncated list of all notes." +
-                "\n 4: Do a binary calculation" +
-                "\n 5: Quit\n");
+                    "\n 1: Try to add a note item." +
+                    "\n 2: View a note by ID." +
+                    "\n 3: View a truncated list of all notes." +
+                    "\n 4: Do a binary calculation" +
+                    "\n 5: Quit\n");
 
-                // System.out.println(System.in.available());
                 int inputSelection = inputScanner.nextInt();
                 inputScanner.nextLine();
 
-                switch (inputSelection) {
-                    case 1:
-                        addNote();
-                        break;
-                    case 2:
-                        viewNote();
-                        break;
-                    case 3:
-                        viewAllNotes();
-                        break;
-                    case 4:
-                        binaryCalculator();
-                        break;
-                    case 5:
-                        active = false;
-                        break;
-                    default:
-                        break;
-                }
+                actions.getOrDefault(inputSelection, () -> {
+                    System.out.println("Invalid selection.");
+                }).run();
             }
         }
     }
@@ -62,11 +54,8 @@ public class CLI {
         while (priority == null) {
             System.out.println("\nPriority (high/medium/low):");
             priority = scanner.nextLine();
-            if (!
-                (priority.equalsIgnoreCase("high") || 
-                priority.equalsIgnoreCase("medium") || 
-                priority.equalsIgnoreCase("low"))) {
-                
+            Set<String> validPriorities = Set.of("high", "medium", "low");
+            if (!validPriorities.contains(priority.toLowerCase())) {
                 System.out.println("\nPlease enter high, medium or low:");
                 priority = null;
             }
@@ -98,8 +87,18 @@ public class CLI {
     }
 
     private void binaryCalculator() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-            "Unimplemented method 'binaryCalculator'");
+        System.out.println("\nValue 1:");
+        int value1 = scanner.nextInt();
+        System.out.println("\nValue 2:");
+        int value2 = scanner.nextInt();
+
+        printBinaryResult(value1, value2, (a, b) -> a + b);
+        printBinaryResult(value1, value2, (a, b) -> a * b);
+    }
+
+    private static void printBinaryResult(int a, int b, BinaryCalculator func) {
+        // perform operation, print result
+        int result = func.binaryOperation(a, b);
+        System.out.println(result);
     }
 }
