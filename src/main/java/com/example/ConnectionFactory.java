@@ -43,6 +43,14 @@ public final class ConnectionFactory {
         }
     }
 
+    /**
+     * This version of the connector creates a single instance of the 
+     * ConnectionFactory object, and reads the system's environmental variables
+     * to determine the properties.
+     * @param useEnvironmentalVariables set equal to USE_ENVIRONMENTAL_VARIABLES
+     *     in order to call this version of the constructor, which sets the
+     *     properties using system environmental variables.
+     */
     private ConnectionFactory(int useEnvironmentalVariables) {
         if (useEnvironmentalVariables == 1) {
             try {

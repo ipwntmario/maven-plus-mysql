@@ -1,5 +1,7 @@
 package com.example;
 
+import java.util.List;
+
 /**
  * The {@code NoteDao} interface defines the data access methods for managing
  * {@link Note} objects. It provides methods for adding new notes and retrieving
@@ -11,7 +13,9 @@ package com.example;
  * </p>
  */
 public interface NoteDao {
-    Note addNote(long id, String content, String priority);
+    int addNote(String content, String priority);
 
     Note getNoteById(long id);
+
+    List<Note> getAllNotesTruncated();
 }

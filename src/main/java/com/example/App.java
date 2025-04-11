@@ -1,5 +1,8 @@
 package com.example;
 
+import java.io.IOException;
+import java.util.Scanner;
+
 /**
  * App is an app that can insert and query from an SQL table of notes.
  */
@@ -13,13 +16,15 @@ public final class App {
     /**
      * Start of the program.
      * @param args does nothing.
+     * @throws IOException 
      */
-    public static void main(String[] args) {
-        // App app = new App();
-        NoteDao noteDao = new NoteDaoImpl();
-        Note testNote = noteDao.getNoteById(2);
-        System.out.println("ID: " + testNote.getId());
-        System.out.println("Content: " + testNote.getContent());
-        System.out.println("Priority: " + testNote.getPriority());
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        CLI cli = new CLI(scanner);
+
+        System.out.println("Welcome to Macrosoft Robert!");
+        cli.promptForActions();
+
+        scanner.close();
     }
 }

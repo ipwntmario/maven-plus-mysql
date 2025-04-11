@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Implementation of the {@link NoteDao} interface. Provides methods for
@@ -30,7 +32,7 @@ public class NoteDaoImpl implements NoteDao {
      *         priority if the operation is successful;
      *         null if the operation fails.
      */
-    public Note addNote(long id, String content, String priority) {
+     public int addNote(String content, String priority) {
 
         // Steps 1 & 5: Open connection to db and close when done.
         try (Connection connection =
@@ -38,7 +40,8 @@ public class NoteDaoImpl implements NoteDao {
 
             // Step 2: Create your statement.
             PreparedStatement preparedStatement = connection.prepareStatement(
-                "INSERT INTO notes (content, priority) VALUES (?, ?)",
+                "INSERT INTO notes (content, priority) " +
+                "VALUES (?, ?)",
                 Statement.RETURN_GENERATED_KEYS);
 
             // Assign any parameters to their values.
@@ -46,26 +49,13 @@ public class NoteDaoImpl implements NoteDao {
             preparedStatement.setString(2, priority);
 
             // Step 3: Execute the statement.
-            preparedStatement.executeUpdate();
-
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-
-            // Step 4: Process the results.
-            // While there is another record in the resultset to process...
-            while (resultSet.next()) {
-                // ...get the value of the furst column in that resultset row...
-                long resultId = resultSet.getLong(1);
-
-                // ... and return a Note with the generated id in its state, as
-                // well as the other values.
-                return new Note(resultId, content, priority);
-            }
+            return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        // Return null if unsuccessful.
-        return null;
+        // Return 0 if unsuccessful.
+        return 0;
     }
 
     // read
@@ -82,7 +72,7 @@ public class NoteDaoImpl implements NoteDao {
      *         null if the operation fails or no note is found with the given
      *         ID.
      */
-    public  Note getNoteById(long id) {
+     public  Note getNoteById(long id) {
 
         // Step 1 & 5: Open a connection to the db and close it when done.
         try (Connection connection =
@@ -91,7 +81,9 @@ public class NoteDaoImpl implements NoteDao {
             // Step 2: Create your statement.
             PreparedStatement preparedStatement =
                 connection.prepareStatement(
-                    "SELECT * FROM notes WHERE id = ?");
+                    "SELECT * " +
+                    "FROM notes " +
+                    "WHERE id = ?");
 
             // Assign any parameters their values.
             preparedStatement.setLong(1, id);
@@ -110,6 +102,40 @@ public class NoteDaoImpl implements NoteDao {
                 // ...and return a Note with those values as its state.
                 return new Note(resultId, content, priority);
             }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        // Return null if unsuccessful.
+        return null;
+    }
+
+    // read
+    public List<Note> getAllNotesTruncated() {
+        try (Connection connection =
+            ConnectionFactory.getConnectionFactory().getConnection()) {
+            
+            List<Note> noteList = new ArrayList<>();
+
+            PreparedStatement preparedStatement =
+                connection.prepareStatement(
+                    "SELECT * " +
+                    "FROM notes ");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                // ... get the values from the respective columns...
+                long resultId = resultSet.getLong("id");
+                String content = resultSet.getString("content")
+                    .substring(0, 10) + "...";
+                String priority = resultSet.getString("priority");
+
+                // ...and return a Note with those values as its state.
+                noteList.add(new Note(resultId, content, priority));
+            }
+
+            return noteList;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
